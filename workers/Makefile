@@ -36,18 +36,18 @@ cluster-%:
 			apply -f -
 
 kubeconfig-%:
-	@echo "Waiting for worker cluster '$*' kubeconfig"
-	@until kubectl \
-		--namespace $* \
-		get secret k3k-$*-kubeconfig >/dev/null 2>&1; do \
-			sleep 1; \
-	done
+	@echo "Getting worker cluster '$*' kubeconfig"
 
-	kubectl \
-		--namespace $* \
-		get secret k3k-$*-kubeconfig \
-		-o jsonpath='{.data.kubeconfig\.yaml}' | \
-		base64 --decode > $*/kubeconfig.yaml
+	kubectl --namespace $* exec k3k-$*-server-0 -- \
+		cat /etc/rancher/k3s/k3s.yaml \
+		> $*/kubeconfig.yaml
+	
+	@printf '%s\n' \
+		'#!/bin/sh' \
+		'' \
+		'exec kubectl --kubeconfig ../../pilot/kubeconfig.yaml --namespace $* port-forward service/k3k-$*-service 6443:443' \
+		> $*/forward.sh
+	chmod +x $*/forward.sh
 
 clean:
 	@for worker in $(WORKERS); do \

@@ -51,14 +51,10 @@ manager:
 register-%:
 	@echo "Registering worker cluster '$*' in Fleet"
 
-	kubectl \
-		--namespace $* \
-		get secret k3k-$*-kubeconfig \
+	kubectl --namespace $* get secret k3k-$*-kubeconfig \
 		-o jsonpath='{.data.kubeconfig\.yaml}' | \
 		base64 --decode | \
-	kubectl \
-		--namespace $(FLEET_NAMESPACE) \
-		create secret generic $*-kubeconfig \
+	kubectl --namespace $(FLEET_NAMESPACE) create secret generic $*-kubeconfig \
 		--from-file=value=/dev/stdin \
 		--dry-run=client \
 		-o yaml | \
