@@ -29,7 +29,7 @@ cloud-provider:
 	@if docker inspect -f '{{.State.Running}}' cloud-provider-kind 2>/dev/null | grep -q true; then \
 		echo "cloud-provider-kind is already running"; \
 	else \
-		docker rm -f cloud-provider-kind >/dev/null 2>&1 || true; \
+		docker rm -f cloud-provider-kind 2>/dev/null || true; \
 		docker run -d \
 			--rm \
 			--network kind \
@@ -39,6 +39,6 @@ cloud-provider:
 	fi
 
 clean:
-	-docker rm -f cloud-provider-kind
+	-docker rm -f cloud-provider-kind >/dev/null 2>/dev/null
 	-kind delete cluster --name "$(CLUSTER_NAME)"
 	rm -f "$(KUBECONFIG)"

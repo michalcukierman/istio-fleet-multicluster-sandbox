@@ -1,16 +1,16 @@
 .PHONY: \
-	bootstrap-local \
+	bootstrap \
 	bootstrap-remote \
 	clusters \
 	istio \
 	fleet \
 	all \
-	clean-local \
+	clean \
 	clean-remote
 
 all: clusters istio fleet
 
-bootstrap-local:
+bootstrap:
 	$(MAKE) -C pilot/bootstrap/local bootstrap
 
 bootstrap-remote:
@@ -25,8 +25,11 @@ istio:
 fleet:
 	$(MAKE) -C fleet install
 
-clean-local:
+clean:
 	$(MAKE) -C pilot/bootstrap/local clean
+	$(MAKE) -C workers clean
+	
 
 clean-remote:
 	$(MAKE) -C pilot/bootstrap/remote clean
+	$(MAKE) -C workers clean
