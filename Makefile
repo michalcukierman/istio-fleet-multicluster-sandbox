@@ -2,13 +2,13 @@
 	bootstrap \
 	bootstrap-remote \
 	clusters \
-	istio \
+	discovery \
 	fleet \
 	all \
 	clean \
 	clean-remote
 
-all: clusters istio fleet
+all: clusters discovery fleet
 
 bootstrap:
 	$(MAKE) -C pilot/bootstrap/local bootstrap
@@ -19,8 +19,8 @@ bootstrap-remote:
 clusters:
 	$(MAKE) -C workers clusters
 
-istio:
-	$(MAKE) -C istio install
+discovery:
+	$(MAKE) -C discovery install
 
 fleet:
 	$(MAKE) -C fleet install
