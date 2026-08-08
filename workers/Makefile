@@ -1,6 +1,8 @@
 KUBECONFIG := ../pilot/kubeconfig.yaml
 export KUBECONFIG
+
 CLUSTER_TEMPLATE := ./cluster.yaml
+FORWARD_TEMPLATE := ./forward.sh
 
 WORKERS := $(patsubst %/,%,$(wildcard */))
 WORKER_TARGETS := $(addprefix cluster-,$(WORKERS))
@@ -36,17 +38,22 @@ cluster-%:
 			apply -f -
 
 kubeconfig-%:
+	@echo "Waiting for worker cluster '$*' server"
+	@until kubectl --namespace $* get pod k3k-$*-server-0 >/dev/null 2>&1; do \
+			sleep 1; \
+	done
+
+	kubectl --namespace $* wait --for=condition=Ready \
+		pod/k3k-$*-server-0 \
+		--timeout=5m
+
 	@echo "Getting worker cluster '$*' kubeconfig"
 
 	kubectl --namespace $* exec k3k-$*-server-0 -- \
 		cat /etc/rancher/k3s/k3s.yaml \
 		> $*/kubeconfig.yaml
 	
-	@printf '%s\n' \
-		'#!/bin/sh' \
-		'' \
-		'exec kubectl --kubeconfig ../../pilot/kubeconfig.yaml --namespace $* port-forward service/k3k-$*-service 6443:443' \
-		> $*/forward.sh
+	CLUSTER_NAME=$* envsubst < $(FORWARD_TEMPLATE) > $*/forward.sh
 	chmod +x $*/forward.sh
 
 clean:

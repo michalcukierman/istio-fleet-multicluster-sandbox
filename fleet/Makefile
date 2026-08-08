@@ -1,6 +1,8 @@
 KUBECONFIG := ../pilot/kubeconfig.yaml
 export KUBECONFIG
 
+CLUSTER_TEMPLATE := ./cluster.yaml
+
 WORKERS := $(patsubst ../workers/%/.,%,$(wildcard ../workers/*/.))
 REGISTER_TARGETS := $(addprefix register-,$(WORKERS))
 
@@ -49,7 +51,7 @@ manager:
 	kubectl create namespace $(FLEET_NAMESPACE) 2>/dev/null || true
 
 register-%:
-	@echo "Registering worker cluster '$*' in Fleet"
+	@echo "Registering worker cluster '$*'"
 
 	kubectl --namespace $* get secret k3k-$*-kubeconfig \
 		-o jsonpath='{.data.kubeconfig\.yaml}' | \
@@ -60,12 +62,5 @@ register-%:
 		-o yaml | \
 	kubectl apply -f -
 
-	@printf '%s\n' \
-		'apiVersion: fleet.cattle.io/v1alpha1' \
-		'kind: Cluster' \
-		'metadata:' \
-		'  name: $*' \
-		'  namespace: $(FLEET_NAMESPACE)' \
-		'spec:' \
-		'  kubeConfigSecret: $*-kubeconfig' | \
-	kubectl apply -f -
+	CLUSTER_NAME=$* envsubst < $(CLUSTER_TEMPLATE) | \
+		kubectl apply -f -
