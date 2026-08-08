@@ -1,0 +1,4 @@
+namespace: pulsar-system
+
+labels:
+  streamx.com/dependency: pulsar

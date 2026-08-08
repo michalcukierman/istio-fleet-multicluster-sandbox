@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pulsar
+spec:
+  replicas: 1
+
+  strategy:
+    type: Recreate
+
+  selector:
+    matchLabels:
+      app: pulsar
+
+  template:
+    metadata:
+      labels:
+        app: pulsar
+
+    spec:
+      containers:
+        - name: pulsar
+          image: apachepulsar/pulsar:4.2.4
+
+          command:
+            - /pulsar/bin/pulsar
+            - standalone
+
+          ports:
+            - name: pulsar
+              containerPort: 6650
+
+            - name: http
+              containerPort: 8080
+
+          readinessProbe:
+            tcpSocket:
+              port: pulsar
+            initialDelaySeconds: 10
+            periodSeconds: 5
+
+          volumeMounts:
+            - name: data
+              mountPath: /pulsar/data
+
+      volumes:
+        - name: data
+          emptyDir: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pulsar
+spec:
+  selector:
+    app: pulsar
+
+  ports:
+    - name: pulsar
+      port: 6650
+      targetPort: pulsar
+
+    - name: http
+      port: 8080
+      targetPort: http

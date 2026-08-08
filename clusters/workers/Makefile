@@ -34,8 +34,7 @@ cluster-%:
 
 	@echo "Creating worker cluster '$*'"
 	CLUSTER_NAME=$* envsubst < $(CLUSTER_TEMPLATE) | \
-		kubectl \
-			apply -f -
+		kubectl apply -f -
 
 kubeconfig-%:
 	@echo "Waiting for worker cluster '$*' server"

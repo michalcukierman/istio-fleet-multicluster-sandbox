@@ -1,0 +1,37 @@
+namespace: rustfs-system
+
+labels:
+  streamx.com/dependency: rustfs
+
+helm:
+  repo: https://charts.rustfs.com
+  chart: rustfs
+  version: 0.12.0
+  releaseName: rustfs
+
+  values:
+    mode:
+      standalone:
+        enabled: true
+      distributed:
+        enabled: false
+
+    secret:
+      allowInsecureDefaults: true
+
+    storageclass:
+      name: standard
+      dataStorageSize: 10Gi
+      logStorageSize: 1Gi
+
+    ingress:
+      enabled: true
+      className: cloud-provider-kind
+      hosts:
+        - host: rustfs.localhost
+          paths:
+            - path: /
+              pathType: Prefix
+    gatewayApi:
+      enabled: false
+    

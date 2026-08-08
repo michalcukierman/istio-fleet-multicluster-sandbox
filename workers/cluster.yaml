@@ -1,7 +1,0 @@
-apiVersion: k3k.io/v1beta1
-kind: Cluster
-metadata:
-  name: ${CLUSTER_NAME}
-  namespace: ${CLUSTER_NAME}
-spec:
-  mode: shared

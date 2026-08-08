@@ -35,7 +35,8 @@ cloud-provider:
 			--network kind \
 			-v /var/run/docker.sock:/var/run/docker.sock \
 			--name cloud-provider-kind \
-			registry.k8s.io/cloud-provider-kind/cloud-controller-manager:v0.11.1; \
+			registry.k8s.io/cloud-provider-kind/cloud-controller-manager:v0.11.1 \
+			--enable-lb-port-mapping; \
 	fi
 
 clean:

@@ -1,0 +1,18 @@
+labels:
+  streamx.com/dependency: envoy-gateway
+
+defaultNamespace: envoy-gateway-system
+
+helm:
+  repo: oci://docker.io/envoyproxy/gateway-helm
+  version: v1.8.3
+  releaseName: envoy-gateway
+
+overrideTargets:
+  - clusterSelector:
+      matchExpressions:
+        - key: streamx.com/cluster-role
+          operator: In
+          values:
+            - edge
+            - processing
