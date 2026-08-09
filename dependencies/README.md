@@ -93,6 +93,7 @@ http://rustfs.localhost:<port>
 ```
 
 The port is discovered from the `cloud-provider-kind` gateway container.
+Default login credentials are rustadmin/rustadmin.
 
 ## Cleanup
 
