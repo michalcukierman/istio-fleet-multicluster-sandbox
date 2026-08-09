@@ -1,7 +1,7 @@
 I’d make it more like an engineering entrypoint and less like documentation for the Makefile implementation.
 
 ````markdown
-# StreamX Clustermesh Sandbox
+# StreamX Multicluster Sandbox
 
 Development and test environment for running a StreamX multicluster topology on a single machine or remote K3s host.
 
