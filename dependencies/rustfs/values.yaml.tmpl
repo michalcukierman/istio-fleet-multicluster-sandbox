@@ -1,0 +1,27 @@
+mode:
+  standalone:
+    enabled: true
+  distributed:
+    enabled: false
+
+secret:
+  rustfs:
+    access_key: rustfsadmin
+    secret_key: streamx-sandbox
+
+storageclass:
+  name: ''
+  dataStorageSize: 10Gi
+  logStorageSize: 1Gi
+
+ingress:
+  enabled: true
+  className: ${INGRESS_CLASS}
+  hosts:
+    - host: ${RUSTFS_HOST}
+      paths:
+        - path: /
+          pathType: Prefix
+
+gatewayApi:
+  enabled: false

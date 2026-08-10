@@ -5,6 +5,7 @@ SSH_USER ?= ubuntu
 SSH_KEY_NAME ?= streamx-sandbox-$(shell whoami)
 SSH_KEY_PATH ?= $(HOME)/.ssh/$(SSH_KEY_NAME)
 
+RUNTIME_ENV := ../../runtime.env
 KUBECONFIG := ../../kubeconfig.yaml
 
 OVHRC := .ovhrc
@@ -58,6 +59,8 @@ k3s:
 		exit 1; \
 	fi; \
 	echo "Instance public IP: $$IP"; \
+	echo "Removing stale SSH host key for $$IP"; \
+	ssh-keygen -R "$$IP" >/dev/null 2>&1 || true; \
 	echo "Waiting for SSH..."; \
 	until ssh \
 		-o IdentitiesOnly=yes \
@@ -71,10 +74,12 @@ k3s:
 	if [ -f "$(KUBECONFIG)" ] && \
 		kubectl \
 			--kubeconfig "$(KUBECONFIG)" \
+			--request-timeout=5s \
 			get nodes >/dev/null 2>&1; then \
 		echo "K3s cluster is already available"; \
 	else \
 		echo "Installing K3s on $$IP"; \
+		rm -f "$(KUBECONFIG)"; \
 		k3sup install \
 			--ip "$$IP" \
 			--user "$(SSH_USER)" \
@@ -82,8 +87,11 @@ k3s:
 			--local-path "$(KUBECONFIG)" \
 			--context pilot \
 			--k3s-channel stable; \
-	fi
+	fi; \
+	echo "PILOT_IP=$$IP" > "$(RUNTIME_ENV)"
 
 clean:
 	rm -f "$(KUBECONFIG)"
+	rm -f "$(RUNTIME_ENV)"
 	@. "$(OVHRC)" && ./$(DELETE_SCRIPT)
+	

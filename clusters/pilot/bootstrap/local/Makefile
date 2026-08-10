@@ -1,9 +1,15 @@
 CLUSTER_NAME ?= pilot
 
+RUNTIME_ENV := ../../runtime.env
 KUBECONFIG := ../../kubeconfig.yaml
 KIND_CONFIG := kind.yaml
 
-.PHONY: bootstrap check cluster cloud-provider clean
+.PHONY: \
+	bootstrap \
+	check \
+	cluster \
+	cloud-provider \
+	clean
 
 bootstrap: check cluster cloud-provider
 
@@ -11,9 +17,9 @@ check:
 	@command -v kind >/dev/null 2>&1 || { echo "Missing required command: kind"; exit 1; }
 	@command -v docker >/dev/null 2>&1 || { echo "Missing required command: docker"; exit 1; }
 
-cluster: $(KUBECONFIG)
-
-$(KUBECONFIG):
+cluster:
+	rm -f "$(RUNTIME_ENV)"
+	
 	@if kind get clusters | grep -qx "$(CLUSTER_NAME)"; then \
 		echo "Kind cluster '$(CLUSTER_NAME)' already exists"; \
 		kind get kubeconfig \
@@ -41,5 +47,15 @@ cloud-provider:
 
 clean:
 	-docker rm -f cloud-provider-kind >/dev/null 2>/dev/null
+
+	@CCM_CONTAINERS=$$(docker ps -aq \
+		--filter "label=io.x-k8s.cloud-provider-kind.cluster=$(CLUSTER_NAME)"); \
+	if [ -n "$$CCM_CONTAINERS" ]; then \
+		echo "Removing cloud-provider-kind proxy containers"; \
+		docker rm -f $$CCM_CONTAINERS >/dev/null; \
+	fi
+
 	-kind delete cluster --name "$(CLUSTER_NAME)"
+
 	rm -f "$(KUBECONFIG)"
+	rm -f "$(RUNTIME_ENV)"

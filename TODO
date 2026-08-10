@@ -1,5 +1,4 @@
-
-- Define contracts between modules, especially domains mapping and reporting
+- Change password in RustFS
 
 - Release as TAR archive
 - Add instructions how to install required CLIs

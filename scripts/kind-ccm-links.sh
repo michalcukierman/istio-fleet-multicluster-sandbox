@@ -1,3 +1,5 @@
+#!/bin/bash
+
 get_link() {
   LABEL="$1"
   DOMAIN="$2"
@@ -30,4 +32,5 @@ get_link() {
   echo "${SCHEME}://${DOMAIN}:${HOST_PORT}"
 }
 
-get_link "$@"
+get_link 'io.x-k8s.cloud-provider-kind.gateway.name=pilot/rustfs-system/kind-ingress-gateway' \
+		rustfs.localhost

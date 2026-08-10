@@ -1,6 +1,9 @@
 KUBECONFIG := ../clusters/pilot/kubeconfig.yaml
 export KUBECONFIG
 
+-include ../clusters/pilot/runtime.env
+export PILOT_IP
+
 PILOT_NAMESPACE := fleet-local
 WORKERS_NAMESPACE := fleet-default
 
@@ -30,15 +33,23 @@ pulsar: check
 		./pulsar
 
 rustfs: check
-	fleet apply --namespace $(PILOT_NAMESPACE) \
+	@if [ -n "$(PILOT_IP)" ]; then \
+		INGRESS_CLASS="traefik"; \
+		RUSTFS_HOST="rustfs.$(PILOT_IP).nip.io"; \
+	else \
+		INGRESS_CLASS="cloud-provider-kind"; \
+		RUSTFS_HOST="rustfs.localhost"; \
+	fi; \
+	INGRESS_CLASS="$$INGRESS_CLASS" \
+	RUSTFS_HOST="$$RUSTFS_HOST" \
+	envsubst < ./rustfs/values.yaml.tmpl > ./rustfs/values.yaml
+
+	fleet apply \
+		--namespace $(PILOT_NAMESPACE) \
 		rustfs \
 		./rustfs
 
-rustfs-url:
-	# FixMe: Think about the responsibility of links/domains mappins and settings
-	@./link.sh \
-		'io.x-k8s.cloud-provider-kind.gateway.name=pilot/rustfs-system/kind-ingress-gateway' \
-		rustfs.localhost
+	rm -f ./rustfs/values.yaml
 
 clean:
 	kubectl --namespace $(WORKERS_NAMESPACE) \
