@@ -1,3 +1,5 @@
+name: envoy-gateway
+
 labels:
   streamx.com/dependency: envoy-gateway
 

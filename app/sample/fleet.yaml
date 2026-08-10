@@ -1,0 +1,28 @@
+name: sample-app
+
+defaultNamespace: default
+
+dependsOn:
+  - name: gateway-class
+
+overrideTargets:
+  - clusterSelector:
+      matchExpressions:
+        - key: streamx.com/cluster-role
+          operator: In
+          values:
+            - edge
+            - processing
+
+targetCustomizations:
+  - name: edge
+    clusterName: edge
+    yaml:
+      overlays:
+        - edge
+
+  - name: processing
+    clusterName: processing
+    yaml:
+      overlays:
+        - processing

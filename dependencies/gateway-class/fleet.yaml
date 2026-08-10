@@ -1,5 +1,7 @@
+name: gateway-class
+
 labels:
-  streamx.com/dependency: envoy-gateway
+  streamx.com/dependency: gateway-class
 
 defaultNamespace: envoy-gateway-system
 

@@ -1,3 +1,5 @@
+name: pulsar
+
 namespace: pulsar-system
 
 labels:

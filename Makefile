@@ -7,7 +7,9 @@ ENV ?= local
 up:
 	$(MAKE) -C clusters up
 	$(MAKE) -C dependencies up
+	$(MAKE) -C app up
 
 clean:
+	$(MAKE) -C app clean
 	$(MAKE) -C dependencies clean
 	$(MAKE) -C clusters clean
