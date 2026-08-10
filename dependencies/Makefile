@@ -44,12 +44,12 @@ clean:
 	kubectl --namespace $(WORKERS_NAMESPACE) \
 		delete bundle \
 		--selector='streamx.com/dependency' \
-		--ignore-not-found
+		--ignore-not-found || true
 
 	kubectl --namespace $(PILOT_NAMESPACE) \
 		delete bundle \
 		--selector='streamx.com/dependency' \
-		--ignore-not-found
+		--ignore-not-found || true
 		
 	# FixMe: CCM is not cleaning gateways
 	# Makefile clusters/Makefile should cleanup this too

@@ -1,10 +1,10 @@
-ENVIRONMENT ?= local
-export ENVIRONMENT
+ENV ?= local
+export ENV
 
-BOOTSTRAP_DIR := pilot/bootstrap/$(ENVIRONMENT)
+BOOTSTRAP_DIR := pilot/bootstrap/$(ENV)
 
-ifeq ($(filter $(ENVIRONMENT),local remote),)
-$(error ENVIRONMENT must be either 'local' or 'remote')
+ifeq ($(filter $(ENV),local remote),)
+$(error ENV must be either 'local' or 'remote')
 endif
 
 .PHONY: \

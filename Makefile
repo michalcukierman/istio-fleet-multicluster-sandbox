@@ -1,4 +1,4 @@
-ENVIRONMENT ?= local
+ENV ?= local
 
 .PHONY: \
 	up \

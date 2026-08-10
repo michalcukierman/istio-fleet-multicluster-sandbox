@@ -46,7 +46,7 @@ make up
 ## Create a remote environment
 
 ```bash
-ENVIRONMENT=remote make up
+ENV=remote make up
 ```
 
 ## Add a worker cluster
@@ -112,5 +112,5 @@ make clean
 Remote:
 
 ```bash
-ENVIRONMENT=remote make clean
+ENV=remote make clean
 ```
