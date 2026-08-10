@@ -1,0 +1,13 @@
+labels:
+  streamx.com/dependency: envoy-gateway
+
+defaultNamespace: envoy-gateway-system
+
+overrideTargets:
+  - clusterSelector:
+      matchExpressions:
+        - key: streamx.com/cluster-role
+          operator: In
+          values:
+            - edge
+            - processing

@@ -1,0 +1,17 @@
+# FixMe: Workaround for https://github.com/rancher/k3k/pull/1128
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: EnvoyProxy
+metadata:
+  name: k3k-shared-proxy-config
+spec:
+  provider:
+    type: Kubernetes
+    kubernetes:
+      envoyDeployment:
+        patch:
+          type: StrategicMerge
+          value:
+            spec:
+              template:
+                spec:
+                  automountServiceAccountToken: true

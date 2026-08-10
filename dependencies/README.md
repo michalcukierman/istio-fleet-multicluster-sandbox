@@ -77,23 +77,6 @@ RustFS runs in standalone mode on the pilot cluster in:
 rustfs-system
 ```
 
-It is exposed locally through the Kind cloud-provider ingress gateway.
-
-Print the local URL with:
-
-```bash
-make rustfs-url
-```
-
-The resulting URL has the form:
-
-```text
-http://rustfs.localhost:<port>
-```
-
-The port is discovered from the `cloud-provider-kind` gateway container.
-Default login credentials are rustadmin/rustadmin.
-
 ## Cleanup
 
 Remove all dependency Fleet bundles:

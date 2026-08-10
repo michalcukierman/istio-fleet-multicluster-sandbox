@@ -11,12 +11,12 @@ WORKERS_NAMESPACE := fleet-default
 	check \
 	up \
 	envoy-gateway \
+	gateway-class \
 	pulsar \
 	rustfs \
-	rustfs-url \
 	clean
 
-up: envoy-gateway pulsar rustfs
+up: envoy-gateway gateway-class pulsar rustfs
 
 check:
 	@command -v fleet >/dev/null 2>&1 || { echo "Missing required command: fleet"; exit 1; }
@@ -26,6 +26,11 @@ envoy-gateway: check
 	fleet apply --namespace $(WORKERS_NAMESPACE) \
 		envoy-gateway \
 		./envoy-gateway
+
+gateway-class: check
+	fleet apply --namespace $(WORKERS_NAMESPACE) \
+		gateway-class \
+		./gateway-class
 
 pulsar: check
 	fleet apply --namespace $(PILOT_NAMESPACE) \
