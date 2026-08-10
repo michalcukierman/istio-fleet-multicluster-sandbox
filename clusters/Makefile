@@ -1,20 +1,24 @@
+ENVIRONMENT ?= local
+export ENVIRONMENT
+
+BOOTSTRAP_DIR := pilot/bootstrap/$(ENVIRONMENT)
+
+ifeq ($(filter $(ENVIRONMENT),local remote),)
+$(error ENVIRONMENT must be either 'local' or 'remote')
+endif
+
 .PHONY: \
 	bootstrap \
-	bootstrap-remote \
 	clusters \
 	discovery \
 	fleet \
-	all \
-	clean \
-	clean-remote
+	up \
+	clean
 
-all: clusters discovery fleet
+up: bootstrap clusters discovery fleet
 
 bootstrap:
-	$(MAKE) -C pilot/bootstrap/local bootstrap
-
-bootstrap-remote:
-	$(MAKE) -C pilot/bootstrap/remote bootstrap
+	$(MAKE) -C $(BOOTSTRAP_DIR) bootstrap
 
 clusters:
 	$(MAKE) -C workers clusters
@@ -26,10 +30,5 @@ fleet:
 	$(MAKE) -C fleet install
 
 clean:
-	$(MAKE) -C pilot/bootstrap/local clean
-	$(MAKE) -C workers clean
-	
-
-clean-remote:
-	$(MAKE) -C pilot/bootstrap/remote clean
+	$(MAKE) -C $(BOOTSTRAP_DIR) clean
 	$(MAKE) -C workers clean

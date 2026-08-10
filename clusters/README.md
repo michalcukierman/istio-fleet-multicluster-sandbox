@@ -1,6 +1,3 @@
-I’d make it more like an engineering entrypoint and less like documentation for the Makefile implementation.
-
-````markdown
 # StreamX Multicluster Sandbox
 
 Development and test environment for running a StreamX multicluster topology on a single machine or remote K3s host.
@@ -43,15 +40,13 @@ Remote environment:
 ## Create a local environment
 
 ```bash
-make bootstrap
-make all
+make up
 ```
 
 ## Create a remote environment
 
 ```bash
-make bootstrap-remote
-make all
+ENVIRONMENT=remote make up
 ```
 
 ## Add a worker cluster
@@ -65,7 +60,7 @@ mkdir workers/<name>
 Then reconcile the environment:
 
 ```bash
-make all
+make up
 ```
 
 ## Access a worker cluster
@@ -117,10 +112,5 @@ make clean
 Remote:
 
 ```bash
-make clean-remote
-```
-
-```
-
-I think this is closer to the right level: **what the repository is, how to use it, how to extend it, and the one non-obvious networking behavior**. It avoids documenting the internal target orchestration.
+ENVIRONMENT=remote make clean
 ```

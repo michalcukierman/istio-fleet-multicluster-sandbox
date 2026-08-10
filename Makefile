@@ -1,11 +1,12 @@
+ENVIRONMENT ?= local
+
 .PHONY: \
 	up \
 	clean
 
 up:
-	$(MAKE) -C clusters bootstrap
-	$(MAKE) -C clusters all
-	$(MAKE) -C dependencies install
+	$(MAKE) -C clusters up
+	$(MAKE) -C dependencies up
 
 clean:
 	$(MAKE) -C dependencies clean

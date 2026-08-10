@@ -6,14 +6,14 @@ WORKERS_NAMESPACE := fleet-default
 
 .PHONY: \
 	check \
-	install \
+	up \
 	envoy-gateway \
 	pulsar \
 	rustfs \
 	rustfs-url \
 	clean
 
-install: envoy-gateway pulsar rustfs
+up: envoy-gateway pulsar rustfs
 
 check:
 	@command -v fleet >/dev/null 2>&1 || { echo "Missing required command: fleet"; exit 1; }
@@ -35,6 +35,7 @@ rustfs: check
 		./rustfs
 
 rustfs-url:
+	# FixMe: Think about the responsibility of links/domains mappins and settings
 	@./link.sh \
 		'io.x-k8s.cloud-provider-kind.gateway.name=pilot/rustfs-system/kind-ingress-gateway' \
 		rustfs.localhost
@@ -50,7 +51,9 @@ clean:
 		--selector='streamx.com/dependency' \
 		--ignore-not-found
 		
-	# CCM is not cleaning gateways
+	# FixMe: CCM is not cleaning gateways
+	# Makefile clusters/Makefile should cleanup this too
+	# This does not work on k3s
 	kubectl -n rustfs-system \
 		delete gateway kind-ingress-gateway \
-		--ignore-not-found
+		--ignore-not-found || true

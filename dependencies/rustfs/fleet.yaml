@@ -20,7 +20,7 @@ helm:
       allowInsecureDefaults: true
 
     storageclass:
-      name: standard
+      name: '' # force a default storage class
       dataStorageSize: 10Gi
       logStorageSize: 1Gi
 
