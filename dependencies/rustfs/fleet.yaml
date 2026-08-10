@@ -2,6 +2,9 @@ name: rustfs
 
 namespace: rustfs-system
 
+namespaceLabels:
+  streamx.com/worker-access: "true"
+
 labels:
   streamx.com/dependency: rustfs
 

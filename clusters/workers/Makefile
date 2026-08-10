@@ -2,6 +2,7 @@ KUBECONFIG := ../pilot/kubeconfig.yaml
 export KUBECONFIG
 
 CLUSTER_TEMPLATE := ./cluster.yaml
+NETWORK_POLICY_TEMPLATE := ./network-policy.yaml
 FORWARD_TEMPLATE := ./forward.sh
 
 WORKERS := $(patsubst %/,%,$(wildcard */))
@@ -29,12 +30,11 @@ operator:
 		k3k k3k/k3k
 
 cluster-%:
-	kubectl \
-		create namespace $* 2>/dev/null || true
+	kubectl create namespace $* 2>/dev/null || true
 
 	@echo "Creating worker cluster '$*'"
-	CLUSTER_NAME=$* envsubst < $(CLUSTER_TEMPLATE) | \
-		kubectl apply -f -
+	CLUSTER_NAME=$* envsubst < $(CLUSTER_TEMPLATE) | kubectl apply -f -
+	CLUSTER_NAME=$* envsubst < $(NETWORK_POLICY_TEMPLATE) | kubectl apply -f -
 
 kubeconfig-%:
 	@echo "Waiting for worker cluster '$*' server"
