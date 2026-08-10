@@ -17,7 +17,6 @@ dependencies/
 │   └── pulsar.yaml
 ├── rustfs/
 │   └── fleet.yaml
-├── link.sh
 └── Makefile
 ```
 
