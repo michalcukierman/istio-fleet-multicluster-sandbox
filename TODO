@@ -1,9 +1,0 @@
-- Change password in RustFS
-
-- Release as TAR archive
-- Add instructions how to install required CLIs
-- Setup monitoring
-
-Done:
-- Setup remote cluster support
-- Unify make tergets to up/clean

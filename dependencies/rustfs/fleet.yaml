@@ -8,6 +8,3 @@ helm:
   chart: rustfs
   version: 0.12.0
   releaseName: rustfs
-
-  valuesFiles:
-    - values.yaml

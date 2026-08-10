@@ -32,5 +32,6 @@ get_link() {
   echo "${SCHEME}://${DOMAIN}:${HOST_PORT}"
 }
 
+# Helper script to query known links from docker
 get_link 'io.x-k8s.cloud-provider-kind.gateway.name=pilot/rustfs-system/kind-ingress-gateway' \
 		rustfs.localhost
