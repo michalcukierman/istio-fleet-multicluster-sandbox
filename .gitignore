@@ -1,5 +1,5 @@
 *kubeconfig.yaml
 .DS_Store
 
-fleet/.pilot-ca.pem
 clusters/pilot/bootstrap/remote/.ovhrc
+clusters/fleet/.pilot-ca.pem
