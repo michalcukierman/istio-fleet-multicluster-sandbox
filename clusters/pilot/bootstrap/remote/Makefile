@@ -40,7 +40,8 @@ check:
 		test -n "$$OVH_ENDPOINT" || { echo "Missing OVH_ENDPOINT in $(OVHRC)"; exit 1; }; \
 		test -n "$$OVH_APPLICATION_KEY" || { echo "Missing OVH_APPLICATION_KEY in $(OVHRC)"; exit 1; }; \
 		test -n "$$OVH_APPLICATION_SECRET" || { echo "Missing OVH_APPLICATION_SECRET in $(OVHRC)"; exit 1; }; \
-		test -n "$$OVH_CONSUMER_KEY" || { echo "Missing OVH_CONSUMER_KEY in $(OVHRC)"; exit 1; }
+		test -n "$$OVH_CONSUMER_KEY" || { echo "Missing OVH_CONSUMER_KEY in $(OVHRC)"; exit 1; }; \
+		test -n "$$OVH_CLOUD_PROJECT_SERVICE" || { echo "Missing OVH_CLOUD_PROJECT_SERVICE in $(OVHRC)"; exit 1; }
 
 instance:
 	@. "$(OVHRC)" && ./$(PROVISION_SCRIPT)

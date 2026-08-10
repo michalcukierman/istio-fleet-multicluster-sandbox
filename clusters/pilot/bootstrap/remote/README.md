@@ -39,8 +39,13 @@ export OVH_APPLICATION_SECRET=""
 export OVH_CONSUMER_KEY=""
 ```
 
-Fill in the three credential values before provisioning.
-The OVHcloud CLI supports these environment variables directly and checks them before its configuration files.
+And the OVHcloud Public Cloud project ID:
+
+```bash
+export OVH_CLOUD_PROJECT_SERVICE=""
+```
+
+Fill in the three API credential values and the Cloud Project ID before provisioning. The OVHcloud CLI supports these environment variables directly and checks them before its configuration files.
 
 ## Create the remote environment
 

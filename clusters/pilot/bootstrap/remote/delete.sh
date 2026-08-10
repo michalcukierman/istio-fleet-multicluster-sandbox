@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-source .ovhrc
-
 USER_NAME="$(whoami)"
 
 NAME="${NAME:-streamx-sandbox-${USER_NAME}}"

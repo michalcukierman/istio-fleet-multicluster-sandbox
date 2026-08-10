@@ -1,0 +1,10 @@
+
+- Define contracts between modules, especially domains mapping and reporting
+
+- Release as TAR archive
+- Add instructions how to install required CLIs
+- Setup monitoring
+
+Done:
+- Setup remote cluster support
+- Unify make tergets to up/clean
