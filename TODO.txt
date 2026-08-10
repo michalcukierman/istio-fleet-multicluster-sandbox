@@ -1,3 +1,0 @@
-- Fix DNS resolution
-
-- Test remote cluster
