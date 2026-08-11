@@ -20,5 +20,5 @@ install: check
 		./sample
 
 clean:
-	kubectl --namespace $(FLEET_NAMESPACE) delete bundle sample \
+	kubectl --namespace $(FLEET_NAMESPACE) delete bundle sample-app \
 		--ignore-not-found || true

@@ -7,7 +7,7 @@ spec:
   listeners:
     - name: http
       protocol: HTTP
-      port: 1410
+      port: 8080
       allowedRoutes:
         namespaces:
           from: Same

@@ -16,7 +16,7 @@ helm:
     ports:
       web:
         port: 8000
-        exposedPort: 1400
+        exposedPort: 80
         expose:
           default: true
 
