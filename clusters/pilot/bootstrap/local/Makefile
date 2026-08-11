@@ -42,6 +42,7 @@ cloud-provider:
 			-v /var/run/docker.sock:/var/run/docker.sock \
 			--name cloud-provider-kind \
 			registry.k8s.io/cloud-provider-kind/cloud-controller-manager:v0.11.1 \
+			--gateway-channel=disabled \
 			--enable-lb-port-mapping; \
 	fi
 

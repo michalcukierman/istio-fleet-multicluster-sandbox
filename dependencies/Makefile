@@ -16,11 +16,16 @@ WORKERS_NAMESPACE := fleet-default
 	rustfs \
 	clean
 
-up: envoy-gateway gateway-class pulsar rustfs
+up: traefik envoy-gateway gateway-class pulsar rustfs
 
 check:
 	@command -v fleet >/dev/null 2>&1 || { echo "Missing required command: fleet"; exit 1; }
 	@command -v kubectl >/dev/null 2>&1 || { echo "Missing required command: kubectl"; exit 1; }
+
+traefik: check
+	fleet apply --namespace $(PILOT_NAMESPACE) \
+		traefik \
+		./traefik
 
 envoy-gateway: check
 	fleet apply --namespace $(WORKERS_NAMESPACE) \
@@ -39,13 +44,10 @@ pulsar: check
 
 rustfs: check
 	@if [ -n "$(PILOT_IP)" ]; then \
-		INGRESS_CLASS="traefik"; \
 		RUSTFS_HOST="rustfs.$(PILOT_IP).nip.io"; \
 	else \
-		INGRESS_CLASS="cloud-provider-kind"; \
 		RUSTFS_HOST="rustfs.localhost"; \
 	fi; \
-	INGRESS_CLASS="$$INGRESS_CLASS" \
 	RUSTFS_HOST="$$RUSTFS_HOST" \
 	envsubst < ./rustfs/values.yaml.tmpl > ./rustfs/values.yaml
 
