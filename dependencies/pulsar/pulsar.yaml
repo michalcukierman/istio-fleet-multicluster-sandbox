@@ -1,3 +1,25 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: token-private-key
+type: Opaque
+data:
+  # DER-encoded PKCS#8 private key
+  private.key: MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCz0isv7AfP9JmcKHEIHHmPBpxMocsF2EZsGS94jKtyaHZd6MSxEF8IKLDUk6b5DL/tA1Wglrq1+q7XXQmfsKqnSGPmvi1TXBz02IiQMVe0JZNQNl+3ddum+GC642SuOqH0k51TLVyeR2KVhYltR9J0wopZP6jDoUp6B66eGJx6CKRCnUZ1//SaQry3UvLrjFq+h+d/aE73tgBHDadIqym3qaJmYR3/uUqlnNhuK4F/YOFFieWz5oYZ2nhuv0TV4ocoC3YTLlUcjUeQ2AFeT1pWwKSUxq/gbC9MlErffWVl1ZelkI8jH4F5DE8zfRtq5ieXjx3Or2I3oi786rGw5mjNAgMBAAECggEAFEtphWCRpyY3efjUfPJdw8cet8Vg2PmGRSf4hBX4OZLRnRqqrEMpPo39GxjI9P274X+JV/T7AJPYzMSa0/OH5xZT9BRNoEVanUWc8A0plVLSU/C3D8kU77zDigQk9kb2xVgtntgVRmXPGgn2ryc2eOgF3jnBjcaz1Z7tVbl4W4tSpQrPY1Mq93Q3E1c6pXCH+7lDo1BaqDRBiW7pFABuRs+P6moxK4JkvWcnwf4m1qcYafj8YeQ80NkcaCMPi+1iKTYnRbpvV5rIhWtMeLuurMk1rsWya63sRcbbomkHNEKZ9cG3ElcpQ8lzIbL5SKrC10cdbpUywH61r/s8dQjDvwKBgQDhhNv+uORyHR0Wj5JD3u7XEFBk4RLAocBQb3Q2DuLuclxvehmh9+KHgXg/YJAVAaVNd/sTfgDas4qQ1ohElBV/po2nb8FLyksjpMGrJOZHasYlMU7qfcF6rOCnEFdcmdkX0ee+d8WEkCna2SNCMHF6m1l/ulasfDIjjcfuWwf1MwKBgQDMIB71DGY1GDKpaCLFjtDLDoxCjQdsOYMz6TxJVvELp6vna4FivYbn+WtauyHgPKqZLr+7QBptQLFKhX3PBfpvk+TCD7dptiQpsftPNuVUmOGuwRg89AnNBITZU2Q1gRPfFMGwZIeIRcXizwVYshZGJ5iHQ5YC+idxHVFwI3wp/wKBgH8VQm+ZO0q+8zxabX8HqqnQzKz8VHfu7pOlKuSnoOPj2AkN0lH+gU4A/IUiYi8kPUWZfggu8kZL9KLH8gRLOo4zihG3nUKbXZpZZrWN1qKaHcypq6HiedwqfXJHeCN7ouWUaLZhghHAt4VW5VKQP/JqhpW+qMcMOajlZawA6kwXAoGBAIrfk5AuBl86/kSo93cmycBMPnqMji9AFZY8qOpQfx/pzBde2aD+xoiN9U6+H7b6LyqWVpUjcJdBuxyzIzu0moRMvwaUQLln1MSVNR/Yfj+G34vQDRhzAzP7ThK5HGUWUxmjen7ydg7tQUskg0OrrWG/UJM+FRIjdLANPTmourGrAoGADeIZ7rPJmujXEnpX+XgFZ3nGNwrUkH5evS72I8+pW0ovKqRbKDfsl/1Eh3+wQHvOEr67UzEXNmBpTeX7hT64AtBQEJtJRh9kv56pw0jvK5NF0T/xX0hSWRPudgg9ByQ4MJZaPviyrhkm1hSNx/oZ9u8rt01xsybHpr91veiltJc=
+
+  # Matching DER-encoded public key.
+  # Kept in the same secret simply to make the dev setup self-contained.
+  public.key: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAs9IrL+wHz/SZnChxCBx5jwacTKHLBdhGbBkveIyrcmh2XejEsRBfCCiw1JOm+Qy/7QNVoJa6tfqu110Jn7Cqp0hj5r4tU1wc9NiIkDFXtCWTUDZft3XbpvhguuNkrjqh9JOdUy1cnkdilYWJbUfSdMKKWT+ow6FKegeunhicegikQp1Gdf/0mkK8t1Ly64xavofnf2hO97YARw2nSKspt6miZmEd/7lKpZzYbiuBf2DhRYnls+aGGdp4br9E1eKHKAt2Ey5VHI1HkNgBXk9aVsCklMav4GwvTJRK331lZdWXpZCPIx+BeQxPM30bauYnl48dzq9iN6Iu/OqxsOZozQIDAQAB
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: token-admin
+type: Opaque
+stringData:
+  token: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZG1pbiJ9.b3sKrPkLsrX_Uxsu2Czy4QzZH6kUM_f7CAghHuzT9cN5W_w4zJLKwe71KJiJmCP4MaDcusNNGssVfA_BYLQvZMEIFe8Tq01yjCogjSMXveOSMYJWv-yQSFw9RHvVL-5cSJLOcjiS3wsa2PiqwSGOkzmzABgLHnD6me6rVbrZBdmvIQvEjBAwFDfRUid3h9PSiCTCBmDXY9_COHFogwjhHtmUrqnTc8zidlLU1--y8WAEZUQCorGafAW9F4r-B7UvxhxzmpOMzV9htJGjus8FvO8OpU371QuLTkIV9YTok-RieTYavLLe-UR4TGIkHK2RbiP0DB_0p-ClKQMtDlTaBg
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -23,8 +45,35 @@ spec:
           image: apachepulsar/pulsar:4.2.4
 
           command:
-            - /pulsar/bin/pulsar
-            - standalone
+            - /bin/bash
+            - -ec
+
+          args:
+            - |
+              /pulsar/bin/apply-config-from-env.py /pulsar/conf/standalone.conf
+              exec /pulsar/bin/pulsar standalone
+
+          env:
+            - name: PULSAR_PREFIX_authenticationEnabled
+              value: "true"
+
+            - name: PULSAR_PREFIX_authenticationProviders
+              value: org.apache.pulsar.broker.authentication.AuthenticationProviderToken
+
+            - name: PULSAR_PREFIX_authorizationEnabled
+              value: "true"
+
+            - name: PULSAR_PREFIX_superUserRoles
+              value: admin
+
+            - name: PULSAR_PREFIX_tokenPublicKey
+              value: file:///pulsar/auth/public.key
+
+            - name: PULSAR_PREFIX_brokerClientAuthenticationPlugin
+              value: org.apache.pulsar.client.impl.auth.AuthenticationToken
+
+            - name: PULSAR_PREFIX_brokerClientAuthenticationParameters
+              value: file:///pulsar/auth/admin.token
 
           ports:
             - name: pulsar
@@ -42,11 +91,23 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /pulsar/data
-
+            - name: token-private-key
+              mountPath: /pulsar/auth/public.key
+              subPath: public.key
+              readOnly: true
+            - name: token-admin
+              mountPath: /pulsar/auth/admin.token
+              subPath: token
+              readOnly: true
       volumes:
         - name: data
           emptyDir: {}
-
+        - name: token-private-key
+          secret:
+            secretName: token-private-key
+        - name: token-admin
+          secret:
+            secretName: token-admin
 ---
 apiVersion: v1
 kind: Service
